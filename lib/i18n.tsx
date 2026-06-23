@@ -56,6 +56,7 @@ type Dict = {
     freelance: string
     remote: string
     fulltime: string
+    stackLabel: string
     stats: { value: string; label: string }[]
   }
   projects: {
@@ -91,6 +92,7 @@ type Dict = {
     send: string
     sending: string
     subject: string
+    error: string
   }
   footer: {
     builtWith: string
@@ -127,6 +129,7 @@ const en: Dict = {
     freelance: 'Open to freelance',
     remote: 'Remote',
     fulltime: 'Full-time',
+    stackLabel: '// STACK',
     stats: [
       { value: '4+', label: 'Years of experience' },
       { value: '10+', label: 'Projects delivered' },
@@ -234,8 +237,9 @@ const en: Dict = {
     email: 'Your Email',
     message: 'Your Message',
     send: 'Send Message',
-    sending: 'Opening your email…',
+    sending: 'Sent!',
     subject: 'Contact from',
+    error: 'Failed to send',
   },
   footer: {
     builtWith: 'Frontend Developer · Built with',
@@ -272,6 +276,7 @@ const es: Dict = {
     freelance: 'Disponible para freelance',
     remote: 'Remoto',
     fulltime: 'Tiempo completo',
+    stackLabel: '// STACK',
     stats: [
       { value: '4+', label: 'Años de experiencia' },
       { value: '10+', label: 'Proyectos entregados' },
@@ -380,8 +385,9 @@ const es: Dict = {
     email: 'Tu correo',
     message: 'Tu mensaje',
     send: 'Enviar mensaje',
-    sending: 'Abriendo tu correo…',
+    sending: '¡Enviado!',
     subject: 'Contacto de',
+    error: 'Error al enviar',
   },
   footer: {
     builtWith: 'Desarrollador Frontend · Hecho con',

@@ -4,57 +4,30 @@ import { ArrowUpRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import { Reveal, RevealGroup, RevealItem } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-label'
-
-const projects = [
-  {
-    tag: 'Next.js',
-    title: 'Eduardo Montenegro',
-    subtitle: 'Professional Website · Next.js',
-    description:
-      'Landing page for a psychologist / psychoanalyst. Clean, minimalist design with multilingual support, contact forms and WhatsApp integration.',
-    domain: 'eduardomontenegro.com',
-    href: 'https://eduardomontenegro.com',
-  },
-  {
-    tag: 'SaaS',
-    title: 'ALUVE Windows App',
-    subtitle: 'Web Application · Next.js · TypeScript',
-    description:
-      'SaaS tool for aluminum window manufacturers. Features: project management, window dimension calculator, cut optimization and professional PDF quote generation.',
-    domain: 'windows-app-lx87.vercel.app',
-    href: 'https://windows-app-lx87.vercel.app',
-  },
-  {
-    tag: 'E-commerce',
-    title: 'Bretaña Colombia',
-    subtitle: 'E-commerce Fix & Optimization · Next.js',
-    description:
-      'Performance and bug fixing on a Colombian retail e-commerce platform. Core Web Vitals optimization and load-time improvements.',
-    domain: 'bretana.com.co',
-    href: 'https://bretana.com.co',
-  },
-]
+import { useI18n } from '@/lib/i18n'
 
 export function Projects() {
+  const { t } = useI18n()
+
   return (
     <section id="projects" className="relative px-4 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
-        <SectionLabel index="02" label="PROJECTS" />
+        <SectionLabel index="02" label={t.projects.label} />
 
         <Reveal>
           <h2 className="mt-8 font-heading text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-            Selected <span className="text-gradient">work</span>
+            {t.projects.titlePre}{' '}
+            <span className="text-gradient">{t.projects.titleHighlight}</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 max-w-md text-muted-foreground">
-            Real projects, real impact. Each one built with performance and user
-            experience at the core.
+            {t.projects.intro}
           </p>
         </Reveal>
 
         <RevealGroup className="mt-12 grid gap-5 md:grid-cols-3">
-          {projects.map((p) => (
+          {t.projects.items.map((p) => (
             <RevealItem key={p.title}>
               <motion.a
                 href={p.href}
@@ -88,7 +61,7 @@ export function Projects() {
                     {p.domain}
                   </span>
                   <span className="flex items-center gap-1 text-xs font-medium text-primary">
-                    View project
+                    {t.projects.viewProject}
                     <ArrowUpRight className="size-3.5" />
                   </span>
                 </div>

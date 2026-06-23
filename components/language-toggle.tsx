@@ -14,7 +14,7 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
   return (
     <div
       className={`relative flex items-center rounded-full border border-border bg-card/60 p-0.5 font-mono text-xs backdrop-blur-sm ${className}`}
-      role="group"
+      role="radiogroup"
       aria-label="Language switcher"
     >
       {options.map((o) => {
@@ -23,8 +23,9 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
           <button
             key={o.value}
             type="button"
+            role="radio"
+            aria-checked={active}
             onClick={() => setLang(o.value)}
-            aria-pressed={active}
             className={`relative z-10 rounded-full px-2.5 py-1 transition-colors ${
               active
                 ? 'text-primary-foreground'

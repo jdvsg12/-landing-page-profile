@@ -82,6 +82,8 @@ export function Navbar() {
           <button
             type="button"
             aria-label={t.nav.toggleMenu}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((o) => !o)}
             className="grid size-9 place-items-center rounded-full border border-border text-foreground md:hidden"
           >
@@ -93,6 +95,9 @@ export function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-menu"
+            role="dialog"
+            aria-label={t.nav.toggleMenu}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

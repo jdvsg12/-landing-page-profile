@@ -5,6 +5,7 @@ import { Mail, Phone, Send, Check } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/brand-icons'
 import { Reveal, RevealGroup, RevealItem } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-label'
+import { useI18n } from '@/lib/i18n'
 
 const contacts = [
   {
@@ -26,37 +27,61 @@ const contacts = [
 ]
 
 export function Contact() {
+  const { t } = useI18n()
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    setError(false)
+    setLoading(true)
     const form = e.currentTarget
     const data = new FormData(form)
     const name = data.get('name')
     const email = data.get('email')
     const message = data.get('message')
-    window.location.href = `mailto:jdvs_g12@hotmail.com?subject=${encodeURIComponent(
-      `Contact from ${name}`,
-    )}&body=${encodeURIComponent(`${message}\n\nFrom: ${name} (${email})`)}`
-    setSent(true)
-    form.reset()
-    setTimeout(() => setSent(false), 4000)
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed')
+      }
+
+      setSent(true)
+      form.reset()
+      setTimeout(() => {
+        setSent(false)
+      }, 4000)
+    } catch {
+      setError(true)
+      setTimeout(() => {
+        setError(false)
+      }, 4000)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <section id="contact" className="relative px-4 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
-        <SectionLabel index="05" label="CONTACT" />
+        <SectionLabel index="05" label={t.contact.label} />
 
         <Reveal>
           <h2 className="mt-8 font-heading text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-            Let&apos;s build something{' '}
-            <span className="text-gradient">together</span>
+            {t.contact.titlePre}{' '}
+            <span className="text-gradient">{t.contact.titleHighlight}</span>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p className="mt-4 max-w-md text-muted-foreground">
-            Open to freelance projects, remote full-time, and collaborations.
+            {t.contact.intro}
           </p>
         </Reveal>
 
@@ -86,37 +111,53 @@ export function Contact() {
               onSubmit={handleSubmit}
               className="flex flex-col gap-4 rounded-2xl border border-border bg-card/50 p-6"
             >
+              <label className="sr-only" htmlFor="contact-name">{t.contact.name}</label>
               <input
+                id="contact-name"
                 name="name"
                 required
-                placeholder="Your Name"
+                placeholder={t.contact.name}
                 className="rounded-lg border border-border bg-secondary/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+              <label className="sr-only" htmlFor="contact-email">{t.contact.email}</label>
               <input
+                id="contact-email"
                 name="email"
                 type="email"
                 required
-                placeholder="Your Email"
+                placeholder={t.contact.email}
                 className="rounded-lg border border-border bg-secondary/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+              <label className="sr-only" htmlFor="contact-message">{t.contact.message}</label>
               <textarea
+                id="contact-message"
                 name="message"
                 required
                 rows={4}
-                placeholder="Your Message"
+                placeholder={t.contact.message}
                 className="resize-none rounded-lg border border-border bg-secondary/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+              <div role="status" aria-live="polite" className="sr-only">
+                {sent ? t.contact.sending : error ? t.contact.error : ''}
+              </div>
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan via-blue to-violet px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02]"
+                disabled={loading}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan via-blue to-violet px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
               >
-                {sent ? (
+                {loading ? (
+                  <span className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                ) : sent ? (
                   <>
-                    <Check className="size-4" /> Opening your email…
+                    <Check className="size-4" /> {t.contact.sending}
+                  </>
+                ) : error ? (
+                  <>
+                    <Send className="size-4" /> {t.contact.error}
                   </>
                 ) : (
                   <>
-                    <Send className="size-4" /> Send Message
+                    <Send className="size-4" /> {t.contact.send}
                   </>
                 )}
               </button>

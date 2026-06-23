@@ -4,32 +4,10 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
 import { Reveal } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-label'
-
-const jobs = [
-  {
-    role: 'Fullstack Developer — Valere',
-    period: 'Jul 2025 – Present | Remote',
-    tags: ['NestJS', 'PostgreSQL', 'GCP', 'Azure Functions', 'Python'],
-    highlight:
-      'Architecture design, RESTful APIs, automated data pipelines, landing pages with Next.js.',
-  },
-  {
-    role: 'Frontend Developer — Flare BBDO',
-    period: 'Oct 2022 – May 2025 | Bogotá',
-    tags: ['Next.js', 'React', 'Tailwind CSS', 'ShadCN', 'Headless CMS'],
-    highlight:
-      'Email platform automation (-50% delivery time), reusable component library, accessible UI.',
-  },
-  {
-    role: 'Frontend Developer — Ariatel SARL',
-    period: 'Jul 2021 – Jul 2022 | Bogotá',
-    tags: ['React', 'TypeScript', 'Webpack'],
-    highlight:
-      'Class to functional component migration, microfrontend optimization (+30% performance).',
-  },
-]
+import { useI18n } from '@/lib/i18n'
 
 export function Experience() {
+  const { t } = useI18n()
   const ref = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -40,11 +18,12 @@ export function Experience() {
   return (
     <section id="experience" className="relative px-4 py-24 sm:py-32">
       <div className="mx-auto max-w-5xl">
-        <SectionLabel index="04" label="EXPERIENCE" />
+        <SectionLabel index="04" label={t.experience.label} />
 
         <Reveal>
           <h2 className="mt-8 font-heading text-4xl font-bold tracking-tight text-balance sm:text-5xl">
-            My <span className="text-gradient">journey</span>
+            {t.experience.titlePre}{' '}
+            <span className="text-gradient">{t.experience.titleHighlight}</span>
           </h2>
         </Reveal>
 
@@ -58,7 +37,7 @@ export function Experience() {
           />
 
           <div className="flex flex-col gap-6">
-            {jobs.map((job, i) => (
+            {t.experience.jobs.map((job, i) => (
               <Reveal key={job.role} delay={i * 0.05}>
                 <div className="relative">
                   {/* node */}

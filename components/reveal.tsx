@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'motion/react'
+import { motion, useReducedMotion, type Variants } from 'motion/react'
 import type { ReactNode } from 'react'
 
 const variants: Variants = {
@@ -11,6 +11,20 @@ const variants: Variants = {
     filter: 'blur(0px)',
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
+}
+
+const visibleVariants: Variants = {
+  hidden: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+  },
+}
+
+function useVariants() {
+  const prefersReduced = useReducedMotion()
+  return prefersReduced ? visibleVariants : variants
 }
 
 export function Reveal({
@@ -25,10 +39,11 @@ export function Reveal({
   as?: 'div' | 'section' | 'li' | 'span'
 }) {
   const MotionTag = motion[as]
+  const v = useVariants()
   return (
     <MotionTag
       className={className}
-      variants={variants}
+      variants={v}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
@@ -68,8 +83,9 @@ export function RevealItem({
   children: ReactNode
   className?: string
 }) {
+  const v = useVariants()
   return (
-    <motion.div className={className} variants={variants}>
+    <motion.div className={className} variants={v}>
       {children}
     </motion.div>
   )
