@@ -1,0 +1,60 @@
+The document is a resume for Julian Velandia, a Fullstack Developer. It details his work experience, skills, and education.
+
+# Text:
+Remote
+JULIAN VELANDIA
+ijdvs_g12@hotmail.com
++573118262053
+julian-velandia-santafe/
+jdvsg12
+
+FULLSTACK DEVELOPER
+Desarrollador con 4 años de experiencia en el ciclo completo de desarrollo web. Especializado en React y
+Next.js, con experiencia técnica en integración de APIs, conocimiento y desarrollo de Backend con Nest.js
+trabajando con GCP para despliegue con CI/CD, optimización de rendimiento y arquitecturas escalables.
+Enfocado en la implementación de interfaces de usuario eficientes orientadas a la optimización de métricas
+de conversión.
+
+EXPERIENCE
+Fullstack Developer Valere
+Remote | Jul 2025 - Present
+• Diseño la arquitectura de aplicaciones para integrar la comunicación entre frontend y backend.
+• Desarrollo APIs RESTful con NestJS y Python, gestionando bases de datos PostgreSQL y despliegues en
+GCP.
+• Automatizo flujos de extracción de datos mediante Azure Functions para optimizar tareas operativas.
+• Desarrollo landing pages con Next.js, ajustando métricas de rendimiento y tiempos de carga.
+Technologies: NestJS, TypeORM, PostgreSQL, Supabase, Google Cloud Platform (Cloud SQL), Azure
+Functions, Python
+
+Frontend Developer - Flare BBDO
+Bogotá, Colombia | Oct 2022 - May 2025
+• Desarrollé una plataforma en Next.js para automatizar plantillas de correo, reduciendo el tiempo de
+entrega en un 50%.
+• Implementé soluciones con Headless CMS, disminuyendo los tickets de soporte técnico en un 40%.
+• Construí una biblioteca de componentes reutilizables con React y Tailwind CSS para estandarizar el
+desarrollo de UI.
+• Colaboré con equipos de diseño para traducir requerimientos en interfaces web accesibles.
+Technologies: Next.js, React, Tailwind CSS, ShadCN, Headless CMS (ACF), Git, Vite
+
+Frontend Developer - Ariatel, SARL
+Bogotá, Colombia | Jul 2021 – Jul 2022
+• Migré componentes de clase a componentes funcionales utilizando TypeScript.
+• Optimicé procesos de compilación con Webpack para microfrontends, mejorando el rendimiento en un
+30%.
+• Integré APIs RESTful y resolví cuellos de botella, aumentando la velocidad de carga en un 20%.
+Technologies: React, TypeScript, Webpack, Git
+
+SKILLS
+Frontend (Main Experience): React, Node.js, Express, TypeScript, JavaScript, Next.js, REST APIs, Docker,
+GCP, Azure, Tailwind CSS, ShadCN UI, Accessibility (a11y)
+Backend and Database: PostgreSQL, Backend Architecture, NestJS, TypeORM
+Tools and Workflow: Git, CI/CD Concepts
+Languages: Spanish (Native), English
+
+EDUCATION
+Degree - English - B1, Conversational
+Jan 2025
+Poliglota
+
+# Images:
+There are no images present on the page.
