@@ -7,7 +7,7 @@ import { useI18n } from '@/lib/i18n'
 import { LanguageToggle } from '@/components/language-toggle'
 
 export function Navbar() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -65,7 +65,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <LanguageToggle className="hidden sm:flex" />
           <a
-            href="/julian-velandia-cv.pdf"
+            href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
             download="Julian-Velandia-CV.pdf"
             className="hidden items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-cyan/60 hover:text-cyan sm:inline-flex"
           >
@@ -117,7 +117,7 @@ export function Navbar() {
               ))}
               <li>
                 <a
-                  href="/julian-velandia-cv.pdf"
+                  href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
                   download="Julian-Velandia-CV.pdf"
                   onClick={() => setOpen(false)}
                   className="mt-1 flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-center text-sm font-medium text-foreground"

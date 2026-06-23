@@ -20,7 +20,7 @@ const item = {
 }
 
 export function Hero() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   return (
     <section
       id="top"
@@ -105,7 +105,7 @@ export function Hero() {
             Contact me
           </a>
           <a
-            href="/julian-velandia-cv.pdf"
+            href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
             download="Julian-Velandia-CV.pdf"
             className="group inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-6 py-3 text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:border-cyan/60 hover:text-cyan"
           >
