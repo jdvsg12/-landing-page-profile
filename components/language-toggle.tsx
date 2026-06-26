@@ -28,7 +28,7 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
             onClick={() => setLang(o.value)}
             className={`relative z-10 rounded-full px-2.5 py-1 transition-colors ${
               active
-                ? 'text-primary-foreground'
+                ? 'text-white'
                 : 'text-muted-foreground hover:text-foreground'
             }`}
           >
