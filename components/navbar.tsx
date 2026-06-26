@@ -63,7 +63,7 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <LanguageToggle className="hidden sm:flex" />
+          <LanguageToggle className="hidden sm:flex" layoutId="lang-pill-desktop" />
           <a
             href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
             download="Julian-Velandia-CV.pdf"
@@ -78,7 +78,7 @@ export function Navbar() {
           >
             {t.nav.hireMe}
           </a>
-          <LanguageToggle className="sm:hidden" />
+          <LanguageToggle className="sm:hidden" layoutId="lang-pill-mobile" />
           <button
             type="button"
             aria-label={t.nav.toggleMenu}

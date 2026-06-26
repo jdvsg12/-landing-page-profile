@@ -8,7 +8,7 @@ const options: { value: Lang; label: string }[] = [
   { value: 'es', label: 'ES' },
 ]
 
-export function LanguageToggle({ className = '' }: { className?: string }) {
+export function LanguageToggle({ className = '', layoutId = 'lang-pill' }: { className?: string; layoutId?: string }) {
   const { lang, setLang } = useI18n()
 
   return (
@@ -34,7 +34,7 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
           >
             {active && (
               <motion.span
-                layoutId="lang-pill"
+                layoutId={layoutId}
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-cyan via-blue to-violet"
               />
