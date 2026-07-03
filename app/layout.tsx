@@ -15,11 +15,48 @@ const spaceGrotesk = Space_Grotesk({
   weight: ['500', '600', '700'],
 })
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landing-page-portfolio-julian-velandia.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'Julian Velandia — Frontend Developer',
-  description:
-    'Frontend Developer specialized in React, Next.js and TypeScript. I build fast, scalable interfaces that convert. Available for remote work.',
+  title: 'Julian Velandia | Senior Frontend Developer',
+  description: 'Portfolio of Julian Velandia, Frontend Specialist based in Bogotá. Expert in building high-performance web interfaces using React.js, Next.js, TypeScript and Tailwind CSS, with backend development knowledge.',
   generator: 'v0.app',
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: 'Julian Velandia | Senior Frontend Developer',
+    description: 'Frontend Specialist (React.js, Next.js, TypeScript) with backend knowledge. Explore my projects and experience in web development.',
+    url: siteUrl,
+    siteName: 'Julian Velandia Portfolio',
+    images: [
+      {
+        url: `${siteUrl}/og-image.jpeg`,
+        width: 1200,
+        height: 630,
+        alt: 'Julian Velandia - Senior Frontend Developer',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Julian Velandia | Senior Frontend Developer',
+    description: 'Frontend Specialist (React.js, Next.js, TypeScript) with backend knowledge.',
+    images: [`${siteUrl}/og-image.jpeg`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   icons: {
     icon: [
       {
