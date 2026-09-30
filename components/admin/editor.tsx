@@ -646,7 +646,7 @@ export function AdminPanel() {
         <Section title="Contacto y pie">
           <div className="grid gap-3 sm:grid-cols-2">
             <Field label="Etiqueta" value={dict.contact.label} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, label: value } }))} />
-            <Field label="Pie" value={dict.footer.builtWith} onChange={(value) => patchDict((current) => ({ ...current, footer: { builtWith: value } }))} />
+            <Field label="Pie" value={dict.footer.builtWith} onChange={(value) => patchDict((current) => ({ ...current, footer: { ...current.footer, builtWith: value } }))} />
             <Field label="Título" value={dict.contact.titlePre} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, titlePre: value } }))} />
             <Field label="Título destacado" value={dict.contact.titleHighlight} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, titleHighlight: value } }))} />
           </div>
@@ -660,6 +660,46 @@ export function AdminPanel() {
             <Field label="Error" value={dict.contact.error} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, error: value } }))} />
             <Field label="Asunto" value={dict.contact.subject} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, subject: value } }))} />
           </div>
+          <Field multiline label="Texto de autorización (checkbox)" value={dict.contact.consent} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, consent: value } }))} />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Enlace a la política" value={dict.contact.consentLink} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, consentLink: value } }))} />
+            <Field label="Enlace en el pie" value={dict.footer.privacy} onChange={(value) => patchDict((current) => ({ ...current, footer: { ...current.footer, privacy: value } }))} />
+          </div>
+        </Section>
+
+        <Section title="Privacidad">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Título" value={dict.privacy.title} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, title: value } }))} />
+            <Field label="Vigencia" value={dict.privacy.updated} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, updated: value } }))} />
+            <Field label="Volver" value={dict.privacy.back} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, back: value } }))} />
+          </div>
+          <Field multiline label="Introducción" value={dict.privacy.intro} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, intro: value } }))} />
+          {dict.privacy.sections.map((section, index) => (
+            <div key={index} className="flex flex-col gap-3 rounded-xl border border-border p-4">
+              <div className="flex justify-end gap-2 text-xs">
+                <button type="button" onClick={() => patchDict((current) => ({ ...current, privacy: { ...current.privacy, sections: moveItem(current.privacy.sections, index, -1) } }))}>Subir</button>
+                <button type="button" onClick={() => patchDict((current) => ({ ...current, privacy: { ...current.privacy, sections: moveItem(current.privacy.sections, index, 1) } }))}>Bajar</button>
+                <button type="button" className="text-destructive" onClick={() => patchDict((current) => ({ ...current, privacy: { ...current.privacy, sections: current.privacy.sections.filter((_, itemIndex) => itemIndex !== index) } }))}>Quitar</button>
+              </div>
+              <Field label="Título de sección" value={section.title} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, sections: current.privacy.sections.map((item, itemIndex) => itemIndex === index ? { ...item, title: value } : item) } }))} />
+              <Field multiline label="Texto" value={section.body} onChange={(value) => patchDict((current) => ({ ...current, privacy: { ...current.privacy, sections: current.privacy.sections.map((item, itemIndex) => itemIndex === index ? { ...item, body: value } : item) } }))} />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() =>
+              patchDict((current) => ({
+                ...current,
+                privacy: {
+                  ...current.privacy,
+                  sections: [...current.privacy.sections, { title: 'Nueva sección', body: '' }],
+                },
+              }))
+            }
+            className="rounded-lg border border-border px-3 py-2 text-sm"
+          >
+            Añadir sección
+          </button>
         </Section>
       </div>
     </main>

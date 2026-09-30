@@ -32,6 +32,7 @@ export function isDict(value: unknown): value is Dict {
   const experience = value.experience
   const contact = value.contact
   const footer = value.footer
+  const privacy = value.privacy
   if (
     !isRecord(nav) ||
     !isRecord(hero) ||
@@ -40,7 +41,8 @@ export function isDict(value: unknown): value is Dict {
     !isRecord(skills) ||
     !isRecord(experience) ||
     !isRecord(contact) ||
-    !isRecord(footer)
+    !isRecord(footer) ||
+    !isRecord(privacy)
   ) {
     return false
   }
@@ -137,8 +139,16 @@ export function isDict(value: unknown): value is Dict {
       'sending',
       'subject',
       'error',
+      'consent',
+      'consentLink',
     ]) ||
-    !hasStrings(footer, ['builtWith'])
+    !hasStrings(footer, ['builtWith', 'privacy']) ||
+    !hasStrings(privacy, ['title', 'updated', 'intro', 'back']) ||
+    !Array.isArray(privacy.sections) ||
+    !privacy.sections.every(
+      (section) =>
+        isRecord(section) && isString(section.title) && isString(section.body),
+    )
   ) {
     return false
   }
@@ -181,8 +191,23 @@ function blobEnabled() {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
 }
 
-function parseContent(raw: string, source: string): SiteContent {
-  const parsed: unknown = JSON.parse(raw)
+function fillMissing(stored: unknown, defaults: unknown): unknown {
+  if (stored === undefined) return defaults
+  if (!isRecord(stored) || !isRecord(defaults)) return stored
+  const merged: Record<string, unknown> = { ...stored }
+  for (const [key, value] of Object.entries(defaults)) {
+    merged[key] = fillMissing(stored[key], value)
+  }
+  return merged
+}
+
+function parseContent(
+  raw: string,
+  source: string,
+  defaults?: SiteContent,
+): SiteContent {
+  const json: unknown = JSON.parse(raw)
+  const parsed = defaults ? fillMissing(json, defaults) : json
   if (!isSiteContent(parsed)) {
     throw new Error(`${source} no tiene la estructura esperada`)
   }
@@ -197,7 +222,7 @@ async function readBlobContent(): Promise<SiteContent | null> {
   const result = await get(BLOB_PATHNAME, { access: 'private', useCache: false })
   if (!result || result.statusCode !== 200) return null
   const raw = await new Response(result.stream).text()
-  return parseContent(raw, BLOB_PATHNAME)
+  return parseContent(raw, BLOB_PATHNAME, readFileContent())
 }
 
 export async function readSiteContent(): Promise<SiteContent> {

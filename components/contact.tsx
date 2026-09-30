@@ -8,7 +8,7 @@ import { SectionLabel } from '@/components/section-label'
 import { useI18n } from '@/lib/i18n'
 
 export function Contact() {
-  const { t, profile } = useI18n()
+  const { t, profile, lang } = useI18n()
   const [sent, setSent] = useState(false)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -40,12 +40,13 @@ export function Contact() {
     const name = data.get('name')
     const email = data.get('email')
     const message = data.get('message')
+    const consent = data.get('consent') === 'on'
 
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, consent, lang }),
       })
 
       if (!res.ok) {
@@ -136,6 +137,30 @@ export function Contact() {
                 placeholder={t.contact.message}
                 className="resize-none rounded-lg border border-border bg-secondary/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               />
+              <label
+                htmlFor="contact-consent"
+                className="flex items-start gap-3 text-xs leading-relaxed text-muted-foreground"
+              >
+                <input
+                  id="contact-consent"
+                  name="consent"
+                  type="checkbox"
+                  required
+                  className="mt-0.5 size-4 shrink-0 accent-primary"
+                />
+                <span>
+                  {t.contact.consent}{' '}
+                  <a
+                    href="/privacidad"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary underline underline-offset-2 hover:text-foreground"
+                  >
+                    {t.contact.consentLink}
+                  </a>
+                  .
+                </span>
+              </label>
               <div role="status" aria-live="polite" className="sr-only">
                 {sent ? t.contact.sending : error ? t.contact.error : ''}
               </div>

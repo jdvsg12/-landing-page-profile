@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { GithubIcon, LinkedinIcon } from '@/components/brand-icons'
 import { useI18n } from '@/lib/i18n'
 
@@ -10,10 +11,18 @@ export function Footer() {
   return (
     <footer className="border-t border-border px-4 py-8">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 sm:flex-row">
-        <p className="text-sm text-muted-foreground">
-          {profile.name} © {year} · {t.footer.builtWith}{' '}
-          <span className="text-primary">Next.js</span>
-        </p>
+        <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground sm:items-start">
+          <p>
+            {profile.name} © {year} · {t.footer.builtWith}{' '}
+            <span className="text-primary">Next.js</span>
+          </p>
+          <Link
+            href="/privacidad"
+            className="text-xs underline-offset-2 transition-colors hover:text-foreground hover:underline"
+          >
+            {t.footer.privacy}
+          </Link>
+        </div>
         <div className="flex items-center gap-3">
           <a
             href={profile.github}

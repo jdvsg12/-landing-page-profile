@@ -87,9 +87,19 @@ export type Dict = {
     sending: string
     subject: string
     error: string
+    consent: string
+    consentLink: string
   }
   footer: {
     builtWith: string
+    privacy: string
+  }
+  privacy: {
+    title: string
+    updated: string
+    intro: string
+    sections: { title: string; body: string }[]
+    back: string
   }
 }
 

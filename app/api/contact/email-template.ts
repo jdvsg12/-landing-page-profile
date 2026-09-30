@@ -1,12 +1,29 @@
+function escapeHtml(value: string) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;')
+}
+
 export function emailTemplate({
-  name,
-  email,
-  message,
+  name: rawName,
+  email: rawEmail,
+  message: rawMessage,
+  consent,
 }: {
   name: string
   email: string
   message: string
+  consent: { acceptedAt: string; acceptedAtIso: string; policy: string }
 }) {
+  const name = escapeHtml(rawName)
+  const email = escapeHtml(rawEmail)
+  const message = escapeHtml(rawMessage).replaceAll('\n', '<br />')
+  const acceptedAt = escapeHtml(consent.acceptedAt)
+  const acceptedAtIso = escapeHtml(consent.acceptedAtIso)
+  const policy = escapeHtml(consent.policy)
   return `
 <!DOCTYPE html>
 <html>
@@ -58,6 +75,15 @@ export function emailTemplate({
                           <td style="padding:6px 0">
                             <span style="color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Message</span>
                             <div style="color:#e2e8f0;font-size:14px;line-height:1.7;margin-top:4px">${message}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:6px 0">
+                            <span style="color:#64748b;font-size:12px;text-transform:uppercase;letter-spacing:0.5px">Autorización de tratamiento de datos</span>
+                            <div style="color:#e2e8f0;font-size:13px;line-height:1.6;margin-top:4px">
+                              Aceptada el ${acceptedAt} (hora Colombia · ${acceptedAtIso})<br />
+                              <span style="color:#94a3b8">${policy}</span>
+                            </div>
                           </td>
                         </tr>
                       </table>

@@ -223,10 +223,49 @@
       "send": "Send Message",
       "sending": "Sent!",
       "subject": "Contact from",
-      "error": "Failed to send"
+      "error": "Failed to send",
+      "consent": "I authorize the processing of my personal data (name, email and message) solely to respond to my request, under Colombian Law 1581 of 2012 and the",
+      "consentLink": "Data Processing Policy"
     },
     "footer": {
-      "builtWith": "Frontend Developer · Built with"
+      "builtWith": "Frontend Developer · Built with",
+      "privacy": "Privacy policy"
+    },
+    "privacy": {
+      "title": "Personal Data Processing Policy",
+      "updated": "Effective September 30, 2026",
+      "intro": "This policy explains how the personal data you share through this site's contact form is processed, in compliance with Colombian Law 1581 of 2012, Decree 1377 of 2013 (compiled in Decree 1074 of 2015) and other Colombian data protection rules.",
+      "sections": [
+        {
+          "title": "Data collected",
+          "body": "Only the data you type into the contact form: name, email address and the content of your message. No sensitive data or data from minors is collected."
+        },
+        {
+          "title": "Purpose",
+          "body": "Your data is used only to read and reply to your message and to follow up on the conversation you start (for example, a job or project proposal). It is not used for advertising and is never sold."
+        },
+        {
+          "title": "Authorization",
+          "body": "By ticking the authorization checkbox and submitting the form, you give your prior, express and informed authorization for this processing. The date and time you gave it are recorded."
+        },
+        {
+          "title": "Who it is shared with",
+          "body": "Your data is not shared with third parties. The email delivery provider Resend is used to deliver the message; it acts as a data processor and may handle the information outside Colombia with appropriate security measures."
+        },
+        {
+          "title": "Retention",
+          "body": "Messages are kept in the controller's inbox for as long as needed to handle your request and for no more than two years, unless you ask for earlier deletion."
+        },
+        {
+          "title": "Your rights",
+          "body": "You can access, update, correct and delete your data, request proof of your authorization, revoke it, be informed about how it has been used, and file complaints with the Superintendence of Industry and Commerce (SIC) after first contacting the controller."
+        },
+        {
+          "title": "How to exercise your rights",
+          "body": "Write to the controller's email shown on this page. Inquiries are answered within 10 business days and claims within 15 business days, as set out in Law 1581 of 2012."
+        }
+      ],
+      "back": "Back to home"
     }
   },
   "es": {
@@ -437,10 +476,49 @@
       "send": "Enviar mensaje",
       "sending": "¡Enviado!",
       "subject": "Contacto de",
-      "error": "Error al enviar"
+      "error": "Error al enviar",
+      "consent": "Autorizo el tratamiento de mis datos personales (nombre, correo y mensaje) únicamente para responder a mi solicitud, conforme a la Ley 1581 de 2012 y la",
+      "consentLink": "Política de tratamiento de datos"
     },
     "footer": {
-      "builtWith": "Desarrollador Frontend · Hecho con"
+      "builtWith": "Desarrollador Frontend · Hecho con",
+      "privacy": "Política de privacidad"
+    },
+    "privacy": {
+      "title": "Política de tratamiento de datos personales",
+      "updated": "Vigente desde el 30 de septiembre de 2026",
+      "intro": "Esta política explica cómo se tratan los datos personales que compartes a través del formulario de contacto de este sitio, en cumplimiento de la Ley 1581 de 2012, el Decreto 1377 de 2013 (compilado en el Decreto 1074 de 2015) y demás normas de protección de datos en Colombia.",
+      "sections": [
+        {
+          "title": "Datos que se recogen",
+          "body": "Solo los datos que escribes en el formulario de contacto: nombre, correo electrónico y el contenido de tu mensaje. No se recogen datos sensibles ni datos de menores de edad."
+        },
+        {
+          "title": "Finalidad",
+          "body": "Tus datos se usan únicamente para leer y responder tu mensaje, y para dar seguimiento a la conversación que inicies (por ejemplo, una propuesta de trabajo o de proyecto). No se usan para publicidad ni se venden."
+        },
+        {
+          "title": "Autorización",
+          "body": "Al marcar la casilla de autorización y enviar el formulario, otorgas tu autorización previa, expresa e informada para este tratamiento. Queda registro de la fecha y hora en que la otorgaste."
+        },
+        {
+          "title": "Con quién se comparten",
+          "body": "Los datos no se comparten con terceros. Para entregar el mensaje por correo se usa el proveedor Resend, que actúa como encargado del tratamiento y puede procesar la información fuera de Colombia con medidas de seguridad adecuadas."
+        },
+        {
+          "title": "Conservación",
+          "body": "Los mensajes se conservan en el correo del responsable mientras sean necesarios para atender tu solicitud y como máximo dos años, salvo que pidas antes su eliminación."
+        },
+        {
+          "title": "Tus derechos",
+          "body": "Puedes conocer, actualizar, rectificar y suprimir tus datos, pedir prueba de la autorización, revocarla, ser informado sobre el uso que se les ha dado y presentar quejas ante la Superintendencia de Industria y Comercio (SIC) una vez agotado el trámite ante el responsable."
+        },
+        {
+          "title": "Cómo ejercer tus derechos",
+          "body": "Escribe al correo del responsable indicado en esta página. Las consultas se responden en máximo 10 días hábiles y los reclamos en máximo 15 días hábiles, según lo previsto en la Ley 1581 de 2012."
+        }
+      ],
+      "back": "Volver al inicio"
     }
   }
 }
