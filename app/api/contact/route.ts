@@ -1,40 +1,35 @@
 import { NextResponse } from 'next/server'
+import { contactFieldErrors, contactSchema } from '@/lib/contact-schema'
 import { readSiteContent } from '@/lib/site-content'
 import { emailTemplate } from './email-template'
 
 export async function POST(request: Request) {
+  let body: unknown
   try {
-    const { name, email, message, consent, lang } = await request.json()
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
 
-    if (
-      typeof name !== 'string' ||
-      typeof email !== 'string' ||
-      typeof message !== 'string' ||
-      !name.trim() ||
-      !email.trim() ||
-      !message.trim()
-    ) {
-      return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 },
-      )
-    }
+  const result = contactSchema.safeParse(body)
+  if (!result.success) {
+    return NextResponse.json(
+      { error: 'Invalid form data', fields: contactFieldErrors(result.error) },
+      { status: 400 },
+    )
+  }
 
-    if (consent !== true) {
-      return NextResponse.json(
-        { error: 'Data processing authorization is required' },
-        { status: 400 },
-      )
-    }
+  const { name, email, message, lang } = result.data
 
+  try {
     const content = await readSiteContent()
-    const policy = content[lang === 'en' ? 'en' : 'es'].privacy
+    const policy = content[lang].privacy
     const acceptedAt = new Date()
 
     const { Resend } = await import('resend')
     const resend = new Resend(process.env.RESEND_API_KEY)
 
-    await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: 'jdvs_g12@hotmail.com',
       subject: `Contact from ${name}`,
@@ -54,6 +49,7 @@ export async function POST(request: Request) {
       }),
       replyTo: email,
     })
+    if (error) throw new Error(error.message)
 
     return NextResponse.json({ success: true })
   } catch {

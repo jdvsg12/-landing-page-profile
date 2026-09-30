@@ -142,6 +142,8 @@ export function isDict(value: unknown): value is Dict {
       'consent',
       'consentLink',
     ]) ||
+    !isRecord(contact.errors) ||
+    !hasStrings(contact.errors, ['name', 'email', 'message', 'consent']) ||
     !hasStrings(footer, ['builtWith', 'privacy']) ||
     !hasStrings(privacy, ['title', 'updated', 'intro', 'back']) ||
     !Array.isArray(privacy.sections) ||

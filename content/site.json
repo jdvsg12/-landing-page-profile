@@ -225,7 +225,13 @@
       "subject": "Contact from",
       "error": "Failed to send",
       "consent": "I authorize the processing of my personal data (name, email and message) solely to respond to my request, under Colombian Law 1581 of 2012 and the",
-      "consentLink": "Data Processing Policy"
+      "consentLink": "Data Processing Policy",
+      "errors": {
+        "name": "Enter your name (2 to 100 characters).",
+        "email": "Enter a valid email address.",
+        "message": "Write a message of at least 10 characters.",
+        "consent": "You need to authorize the processing of your data to send the message."
+      }
     },
     "footer": {
       "builtWith": "Frontend Developer · Built with",
@@ -478,7 +484,13 @@
       "subject": "Contacto de",
       "error": "Error al enviar",
       "consent": "Autorizo el tratamiento de mis datos personales (nombre, correo y mensaje) únicamente para responder a mi solicitud, conforme a la Ley 1581 de 2012 y la",
-      "consentLink": "Política de tratamiento de datos"
+      "consentLink": "Política de tratamiento de datos",
+      "errors": {
+        "name": "Escribe tu nombre (entre 2 y 100 caracteres).",
+        "email": "Escribe un correo válido.",
+        "message": "Escribe un mensaje de al menos 10 caracteres.",
+        "consent": "Debes autorizar el tratamiento de tus datos para enviar el mensaje."
+      }
     },
     "footer": {
       "builtWith": "Desarrollador Frontend · Hecho con",

@@ -665,6 +665,18 @@ export function AdminPanel() {
             <Field label="Enlace a la política" value={dict.contact.consentLink} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, consentLink: value } }))} />
             <Field label="Enlace en el pie" value={dict.footer.privacy} onChange={(value) => patchDict((current) => ({ ...current, footer: { ...current.footer, privacy: value } }))} />
           </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {(
+              [
+                ['name', 'Error: nombre'],
+                ['email', 'Error: correo'],
+                ['message', 'Error: mensaje'],
+                ['consent', 'Error: autorización'],
+              ] as const
+            ).map(([key, label]) => (
+              <Field key={key} label={label} value={dict.contact.errors[key]} onChange={(value) => patchDict((current) => ({ ...current, contact: { ...current.contact, errors: { ...current.contact.errors, [key]: value } } }))} />
+            ))}
+          </div>
         </Section>
 
         <Section title="Privacidad">
