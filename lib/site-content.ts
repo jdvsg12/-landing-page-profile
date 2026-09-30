@@ -1,8 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { get, put } from '@vercel/blob'
 import type { Dict, Profile, SiteContent } from '@/lib/site-types'
 
 const filePath = join(process.cwd(), 'content', 'site.json')
+const BLOB_PATHNAME = 'site-content.json'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -175,15 +177,52 @@ export function isSiteContent(value: unknown): value is SiteContent {
   )
 }
 
-export function readSiteContent(): SiteContent {
-  const raw = readFileSync(filePath, 'utf8')
+function blobEnabled() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
+}
+
+function parseContent(raw: string, source: string): SiteContent {
   const parsed: unknown = JSON.parse(raw)
   if (!isSiteContent(parsed)) {
-    throw new Error('content/site.json no tiene la estructura esperada')
+    throw new Error(`${source} no tiene la estructura esperada`)
   }
   return parsed
 }
 
-export function writeSiteContent(content: SiteContent) {
-  writeFileSync(filePath, `${JSON.stringify(content, null, 2)}\n`, 'utf8')
+function readFileContent(): SiteContent {
+  return parseContent(readFileSync(filePath, 'utf8'), 'content/site.json')
+}
+
+async function readBlobContent(): Promise<SiteContent | null> {
+  const result = await get(BLOB_PATHNAME, { access: 'private', useCache: false })
+  if (!result || result.statusCode !== 200) return null
+  const raw = await new Response(result.stream).text()
+  return parseContent(raw, BLOB_PATHNAME)
+}
+
+export async function readSiteContent(): Promise<SiteContent> {
+  if (blobEnabled()) {
+    try {
+      const stored = await readBlobContent()
+      if (stored) return stored
+    } catch (error) {
+      console.error('No se pudo leer el contenido desde Blob', error)
+    }
+  }
+  return readFileContent()
+}
+
+export async function writeSiteContent(content: SiteContent) {
+  const json = `${JSON.stringify(content, null, 2)}\n`
+  if (blobEnabled()) {
+    await put(BLOB_PATHNAME, json, {
+      access: 'private',
+      allowOverwrite: true,
+      addRandomSuffix: false,
+      contentType: 'application/json',
+      cacheControlMaxAge: 60,
+    })
+    return
+  }
+  writeFileSync(filePath, json, 'utf8')
 }

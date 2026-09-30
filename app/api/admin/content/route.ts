@@ -11,7 +11,7 @@ export async function GET() {
   if (!(await isAdminRequest())) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
   }
-  return NextResponse.json(readSiteContent())
+  return NextResponse.json(await readSiteContent())
 }
 
 export async function PUT(request: Request) {
@@ -39,13 +39,11 @@ export async function PUT(request: Request) {
   }
 
   try {
-    writeSiteContent(parsed)
-  } catch {
+    await writeSiteContent(parsed)
+  } catch (error) {
+    console.error('No se pudo guardar el contenido', error)
     return NextResponse.json(
-      {
-        error:
-          'No se pudo escribir content/site.json. En Vercel el disco es de solo lectura: guarda en local y despliega el archivo.',
-      },
+      { error: 'No se pudo guardar el contenido. Inténtalo de nuevo.' },
       { status: 500 },
     )
   }
