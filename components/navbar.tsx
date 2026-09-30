@@ -7,7 +7,7 @@ import { useI18n } from '@/lib/i18n'
 import { LanguageToggle } from '@/components/language-toggle'
 
 export function Navbar() {
-  const { t, lang } = useI18n()
+  const { t, lang, profile } = useI18n()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -42,14 +42,14 @@ export function Navbar() {
       >
         <a href="#top" className="flex items-center gap-2 font-mono text-sm">
           <span className="grid size-7 place-items-center rounded-md border border-primary/40 text-[0.7rem] font-bold text-primary">
-            JV
+            {profile.mark}
           </span>
-          <span className="font-semibold tracking-tight text-foreground">
-            julian.dev
+          <span className="font-semibold tracking-tight text-foreground md:hidden lg:inline">
+            {profile.siteLabel}
           </span>
         </a>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-5 md:flex lg:gap-7">
           {links.map((l) => (
             <li key={l.href}>
               <a
@@ -65,7 +65,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <LanguageToggle className="hidden sm:flex" layoutId="lang-pill-desktop" />
           <a
-            href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
+            href={lang === 'en' ? profile.cvEn : profile.cvEs}
             download="Julian-Velandia-CV.pdf"
             className="hidden items-center gap-1.5 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-cyan/60 hover:text-cyan sm:inline-flex"
           >
@@ -74,7 +74,7 @@ export function Navbar() {
           </a>
           <a
             href="#contact"
-            className="hidden rounded-full bg-gradient-to-r from-cyan via-blue to-violet px-4 py-2 text-sm font-medium text-primary-foreground transition-transform hover:scale-105 sm:inline-block"
+            className="brand-gradient hidden rounded-full px-4 py-2 text-sm font-medium text-primary-foreground transition-transform hover:scale-105 sm:inline-block"
           >
             {t.nav.hireMe}
           </a>
@@ -117,7 +117,7 @@ export function Navbar() {
               ))}
               <li>
                 <a
-                  href={lang === 'en' ? '/julian-velandia-cv-en.pdf' : '/julian-velandia-cv.pdf'}
+                  href={lang === 'en' ? profile.cvEn : profile.cvEs}
                   download="Julian-Velandia-CV.pdf"
                   onClick={() => setOpen(false)}
                   className="mt-1 flex items-center justify-center gap-2 rounded-lg border border-border px-3 py-2.5 text-center text-sm font-medium text-foreground"
@@ -130,7 +130,7 @@ export function Navbar() {
                 <a
                   href="#contact"
                   onClick={() => setOpen(false)}
-                  className="mt-1 block rounded-lg bg-gradient-to-r from-cyan via-blue to-violet px-3 py-2.5 text-center text-sm font-medium text-primary-foreground"
+                  className="brand-gradient mt-1 block rounded-lg px-3 py-2.5 text-center text-sm font-medium text-primary-foreground"
                 >
                   {t.nav.hireMe}
                 </a>

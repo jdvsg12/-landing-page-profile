@@ -5,8 +5,6 @@ import { Reveal, RevealGroup, RevealItem } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-label'
 import { useI18n } from '@/lib/i18n'
 
-const stack = ['React', 'Next.js', 'TypeScript', 'NestJS', 'PostgreSQL']
-
 export function About() {
   const { t } = useI18n()
 
@@ -74,12 +72,12 @@ export function About() {
                   {t.about.stackLabel}
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {stack.map((t) => (
+                  {t.about.stack.map((item) => (
                     <span
-                      key={t}
+                      key={item}
                       className="rounded-full border border-border bg-secondary/50 px-3 py-1 font-mono text-xs text-foreground/80"
                     >
-                      {t}
+                      {item}
                     </span>
                   ))}
                 </div>

@@ -64,7 +64,7 @@ export function Skills() {
               {t.skills.proficiency}
             </div>
             <p className="mt-2 font-mono text-sm text-foreground/80">
-              React / Next.js
+              {t.skills.focus}
             </p>
           </div>
         </Reveal>

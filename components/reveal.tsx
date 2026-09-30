@@ -1,56 +1,53 @@
 'use client'
 
-import { motion, useReducedMotion, type Variants } from 'motion/react'
-import type { ReactNode } from 'react'
+import { useRef, type ReactNode } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const variants: Variants = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(6px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-}
+gsap.registerPlugin(ScrollTrigger)
 
-const visibleVariants: Variants = {
-  hidden: { opacity: 1, y: 0, filter: 'blur(0px)' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-  },
-}
-
-function useVariants() {
-  const prefersReduced = useReducedMotion()
-  return prefersReduced ? visibleVariants : variants
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
 export function Reveal({
   children,
   delay = 0,
   className,
-  as = 'div',
 }: {
   children: ReactNode
   delay?: number
   className?: string
   as?: 'div' | 'section' | 'li' | 'span'
 }) {
-  const MotionTag = motion[as]
-  const v = useVariants()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const element = ref.current
+      if (!element || prefersReducedMotion()) return
+      gsap.from(element, {
+        y: 28,
+        autoAlpha: 0,
+        duration: 0.75,
+        delay,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      })
+    },
+    { scope: ref, dependencies: [delay] },
+  )
+
   return (
-    <MotionTag
-      className={className}
-      variants={v}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ delay }}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </MotionTag>
+    </div>
   )
 }
 
@@ -63,16 +60,34 @@ export function RevealGroup({
   className?: string
   stagger?: number
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useGSAP(
+    () => {
+      const element = ref.current
+      if (!element || prefersReducedMotion()) return
+      const items = element.querySelectorAll(':scope > [data-reveal-item]')
+      gsap.from(items, {
+        y: 32,
+        autoAlpha: 0,
+        duration: 0.7,
+        stagger,
+        ease: 'power3.out',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: element,
+          start: 'top 86%',
+          toggleActions: 'play none none none',
+        },
+      })
+    },
+    { scope: ref, dependencies: [stagger] },
+  )
+
   return (
-    <motion.div
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ staggerChildren: stagger }}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   )
 }
 
@@ -83,10 +98,9 @@ export function RevealItem({
   children: ReactNode
   className?: string
 }) {
-  const v = useVariants()
   return (
-    <motion.div className={className} variants={v}>
+    <div data-reveal-item className={className}>
       {children}
-    </motion.div>
+    </div>
   )
 }

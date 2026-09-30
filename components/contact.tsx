@@ -7,30 +7,29 @@ import { Reveal, RevealGroup, RevealItem } from '@/components/reveal'
 import { SectionLabel } from '@/components/section-label'
 import { useI18n } from '@/lib/i18n'
 
-const contacts = [
-  {
-    icon: Mail,
-    label: 'jdvs_g12@hotmail.com',
-    href: 'mailto:jdvs_g12@hotmail.com',
-  },
-  { icon: Phone, label: '+57 311 826 2053', href: 'tel:+573118262053' },
-  {
-    icon: LinkedinIcon,
-    label: 'linkedin.com/in/julian-velandia-santafe',
-    href: 'https://www.linkedin.com/in/julian-velandia-santafe/',
-  },
-  {
-    icon: GithubIcon,
-    label: 'github.com/jdvsg12',
-    href: 'https://github.com/jdvsg12',
-  },
-]
-
 export function Contact() {
-  const { t } = useI18n()
+  const { t, profile } = useI18n()
   const [sent, setSent] = useState(false)
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const contacts = [
+    {
+      icon: Mail,
+      label: profile.email,
+      href: `mailto:${profile.email}`,
+    },
+    { icon: Phone, label: profile.phone, href: profile.phoneHref },
+    {
+      icon: LinkedinIcon,
+      label: profile.linkedinLabel,
+      href: profile.linkedin,
+    },
+    {
+      icon: GithubIcon,
+      label: profile.githubLabel,
+      href: profile.github,
+    },
+  ]
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -143,7 +142,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan via-blue to-violet px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
+                className="brand-gradient inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-medium text-primary-foreground transition-transform hover:scale-[1.02] disabled:opacity-50 disabled:hover:scale-100"
               >
                 {loading ? (
                   <span className="size-4 animate-spin rounded-full border-2 border-white border-t-transparent" />

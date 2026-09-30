@@ -36,7 +36,7 @@ export function LanguageToggle({ className = '', layoutId = 'lang-pill' }: { cla
               <motion.span
                 layoutId={layoutId}
                 transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-cyan via-blue to-violet"
+                className="brand-gradient absolute inset-0 -z-10 rounded-full"
               />
             )}
             {o.label}
